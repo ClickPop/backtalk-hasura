@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/ should error if given incorrect api key 1`] = `
+Object {
+  "error": "invalid api key on request",
+}
+`;
+
+exports[`/ should error if no api key is supplied 1`] = `
+Object {
+  "error": "invalid api key on request",
+}
+`;
+
+exports[`/ should return available routes with correct api key 1`] = `
+Array [
+  Object {
+    "methods": Array [
+      "post",
+    ],
+    "path": "/auth/login",
+  },
+  Object {
+    "methods": Array [
+      "get",
+    ],
+    "path": "/auth",
+  },
+  Object {
+    "methods": Array [
+      "post",
+    ],
+    "path": "/auth-check",
+  },
+]
+`;

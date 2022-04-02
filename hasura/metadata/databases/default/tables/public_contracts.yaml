@@ -1,0 +1,18 @@
+table:
+  name: contracts
+  schema: public
+select_permissions:
+- permission:
+    columns:
+    - address
+    - token_ids
+    - token_type
+    filter: {}
+  role: anonymous
+- permission:
+    columns:
+    - address
+    - token_ids
+    - token_type
+    filter: {}
+  role: user

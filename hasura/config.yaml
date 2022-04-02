@@ -1,0 +1,4 @@
+version: 3
+endpoint: https://backtalk.hasura.app/v1/graphql
+metadata_directory: ./metadata
+migrations_directory: ./migrations

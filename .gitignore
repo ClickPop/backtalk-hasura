@@ -1,0 +1,5 @@
+node_modules/
+/**/*.env
+!/**/sample.env
+/local/db_data
+/**/.pnpm-debug.log
