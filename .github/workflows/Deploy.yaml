@@ -18,28 +18,30 @@ jobs:
         run: cd hasura && hasura migrate apply && hasura metadata apply
         env:
           HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.BACKTALK_HASURA_ADMIN_SECRET }}
-  # Deploy-Functions:
-  #   runs-on: 'ubuntu-latest'
-  #   steps:
-  #     - name: Checkout repo
-  #       uses: actions/checkout@v2
-  #     - name: Setup Node runtime
-  #       uses: actions/setup-node@v2
-  #     - name: Setup PNPM
-  #       uses: pnpm/action-setup@v2.0.1
-  #       with:
-  #         version: 6.24.2
-  #     - name: Setup Cloud SDK Auth
-  #       uses: google-github-actions/auth@v0
-  #       with:
-  #         credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-  #     - name: Set up Cloud SDK
-  #       uses: google-github-actions/setup-gcloud@v0
-  #     - name: Install deps
-  #       run: pnpm i
-  #     - name: Deploy prod
-  #       if: ${{contains(github.ref, 'main')}}
-  #       run: pnpm run deploy
-  #       env:
-  #         HASURA_BASE_URL: ${{ secrets.BACKTALK_HASURA_BASE_URL }}
-  #         HASURA_ADMIN_SECRET: ${{ secrets.BACKTALK_HASURA_ADMIN_SECRET }}
+  Deploy-Functions:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Setup Node runtime
+        uses: actions/setup-node@v2
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.24.2
+      - name: Setup Cloud SDK Auth
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+      - name: Install deps
+        run: pnpm i
+        working-directory: ./functions
+      - name: Deploy
+        if: ${{contains(github.ref, 'main')}}
+        run: pnpm run deploy
+        working-directory: ./functions
+        env:
+          HASURA_BASE_URL: ${{ secrets.BACKTALK_HASURA_BASE_URL }}
+          HASURA_ADMIN_SECRET: ${{ secrets.BACKTALK_HASURA_ADMIN_SECRET }}
