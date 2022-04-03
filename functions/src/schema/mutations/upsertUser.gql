@@ -1,0 +1,9 @@
+mutation upsertUser($wallet: String!, $email: String) {
+  insert_users_one(
+    object: { wallet: $wallet, email: $email }
+    on_conflict: { constraint: users_pkey, update_columns: [] }
+  ) {
+    wallet
+    email
+  }
+}

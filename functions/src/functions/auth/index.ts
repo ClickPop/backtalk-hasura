@@ -8,7 +8,8 @@ import {
   HasuraLoginHandler,
   Roles_Enum,
 } from 'src/types';
-
+import { sdk } from 'src/lib/graphql';
+const { upsertUser } = sdk;
 const authHook: HasuraAuthHook = async (_, res) => {
   try {
     const wallet = res.locals.auth;

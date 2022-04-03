@@ -1,3 +1,61 @@
 table:
   name: responses
   schema: public
+object_relationships:
+- name: option
+  using:
+    foreign_key_constraint_on: response_option_id
+- name: question
+  using:
+    foreign_key_constraint_on: question_id
+- name: user
+  using:
+    foreign_key_constraint_on: wallet
+select_permissions:
+- permission:
+    columns:
+    - question_id
+    - response_option_id
+    - response_content
+    - wallet
+    filter:
+      question:
+        survey:
+          _or:
+          - is_public:
+              _eq: true
+          - user:
+              wallet:
+                _eq: X-Hasura-User-Id
+          - owner:
+              _eq: X-Hasura-User-Id
+  role: anonymous
+- permission:
+    columns:
+    - question_id
+    - response_option_id
+    - response_content
+    - wallet
+    filter:
+      question:
+        survey:
+          _or:
+          - is_public:
+              _eq: true
+          - user:
+              wallet:
+                _eq: X-Hasura-User-Id
+          - owner:
+              _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      wallet:
+        _eq: X-Hasura-User-Id
+  role: anonymous
+- permission:
+    filter:
+      wallet:
+        _eq: X-Hasura-User-Id
+  role: user

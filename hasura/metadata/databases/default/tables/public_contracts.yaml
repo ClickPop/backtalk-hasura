@@ -1,6 +1,30 @@
 table:
   name: contracts
   schema: public
+object_relationships:
+- name: tokenTypeByTokenType
+  using:
+    foreign_key_constraint_on: token_type
+array_relationships:
+- name: surveys
+  using:
+    foreign_key_constraint_on:
+      column: contract_address
+      table:
+        name: surveys
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      surveys:
+        owner:
+          _eq: X-Hasura-User-Id
+    columns:
+    - token_ids
+    - address
+    - token_type
+  role: user
 select_permissions:
 - permission:
     columns:
@@ -15,4 +39,26 @@ select_permissions:
     - token_ids
     - token_type
     filter: {}
+  role: user
+update_permissions:
+- permission:
+    check:
+      surveys:
+        owner:
+          _eq: X-Hasura-User-Id
+    columns:
+    - token_ids
+    - address
+    - token_type
+    filter:
+      surveys:
+        owner:
+          _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      surveys:
+        owner:
+          _eq: X-Hasura-User-Id
   role: user

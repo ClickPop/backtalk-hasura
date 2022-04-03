@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
-
+export * from 'src/schema/schema.g';
 export enum Roles_Enum {
   Admin = 'admin',
   Anonymous = 'anonymous',

@@ -1,3 +1,87 @@
 table:
   name: surveys
   schema: public
+object_relationships:
+- name: contract
+  using:
+    foreign_key_constraint_on: contract_address
+- name: user
+  using:
+    foreign_key_constraint_on: owner
+array_relationships:
+- name: questions
+  using:
+    foreign_key_constraint_on:
+      column: survey_id
+      table:
+        name: questions
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      owner:
+        _eq: X-Hasura-User-Id
+    columns:
+    - contract_address
+    - description
+    - is_active
+    - is_public
+    - owner
+    - title
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - is_active
+    - is_public
+    - id
+    - contract_address
+    - description
+    - owner
+    - title
+    filter:
+      _or:
+      - is_active:
+          _eq: true
+      - owner:
+          _eq: X-Hasura-User-Id
+  role: anonymous
+- permission:
+    columns:
+    - is_active
+    - is_public
+    - id
+    - contract_address
+    - description
+    - owner
+    - title
+    filter:
+      _or:
+      - is_active:
+          _eq: true
+      - owner:
+          _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check:
+      owner:
+        _eq: X-Hasura-User-Id
+    columns:
+    - contract_address
+    - description
+    - is_active
+    - is_public
+    - owner
+    - title
+    filter:
+      owner:
+        _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      owner:
+        _eq: X-Hasura-User-Id
+  role: user

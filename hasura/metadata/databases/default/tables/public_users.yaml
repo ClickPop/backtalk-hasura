@@ -1,3 +1,82 @@
 table:
   name: users
   schema: public
+array_relationships:
+- name: responses
+  using:
+    foreign_key_constraint_on:
+      column: wallet
+      table:
+        name: responses
+        schema: public
+- name: surveys
+  using:
+    foreign_key_constraint_on:
+      column: owner
+      table:
+        name: surveys
+        schema: public
+insert_permissions:
+- permission:
+    check:
+      wallet:
+        _eq: X-Hasura-User-Id
+    columns:
+    - email
+    - wallet
+  role: anonymous
+- permission:
+    check:
+      wallet:
+        _eq: X-Hasura-User-Id
+    columns:
+    - email
+    - wallet
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - email
+    - wallet
+    filter:
+      wallet:
+        _eq: X-Hasura-User-Id
+  role: anonymous
+- permission:
+    columns:
+    - email
+    - wallet
+    filter:
+      wallet:
+        _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - email
+    - wallet
+    filter:
+      wallet:
+        _eq: X-Hasura-User-Id
+  role: anonymous
+- permission:
+    check: null
+    columns:
+    - email
+    - wallet
+    filter:
+      wallet:
+        _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      wallet:
+        _eq: X-Hasura-User-Id
+  role: anonymous
+- permission:
+    filter:
+      wallet:
+        _eq: X-Hasura-User-Id
+  role: user

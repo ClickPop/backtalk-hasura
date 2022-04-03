@@ -1,3 +1,91 @@
 table:
   name: questions
   schema: public
+object_relationships:
+- name: questionTypeByQuestionType
+  using:
+    foreign_key_constraint_on: question_type
+- name: survey
+  using:
+    foreign_key_constraint_on: survey_id
+array_relationships:
+- name: options
+  using:
+    foreign_key_constraint_on:
+      column: question_id
+      table:
+        name: options
+        schema: public
+- name: responses
+  using:
+    foreign_key_constraint_on:
+      column: question_id
+      table:
+        name: responses
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      survey:
+        owner:
+          _eq: X-Hasura-User-Id
+    columns:
+    - is_required
+    - prompt
+    - question_type
+    - survey_id
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - is_required
+    - id
+    - survey_id
+    - prompt
+    - question_type
+    filter:
+      survey:
+        _or:
+        - is_active:
+            _eq: true
+        - owner:
+            _eq: X-Hasura-User-Id
+  role: anonymous
+- permission:
+    columns:
+    - is_required
+    - id
+    - survey_id
+    - prompt
+    - question_type
+    filter:
+      survey:
+        _or:
+        - is_active:
+            _eq: true
+        - owner:
+            _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check:
+      survey:
+        owner:
+          _eq: X-Hasura-User-Id
+    columns:
+    - is_required
+    - prompt
+    - question_type
+    filter:
+      survey:
+        owner:
+          _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      survey:
+        owner:
+          _eq: X-Hasura-User-Id
+  role: user
