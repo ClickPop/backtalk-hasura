@@ -33,9 +33,11 @@ export type HasuraActionReqBody = {
 
 interface NewResponseBody extends HasuraActionReqBody {
   input: {
-    question_id: number;
-    response_content: string;
-    response_option_id?: number;
+    input: {
+      question_id: number;
+      response_content: string;
+      response_option_id?: number;
+    };
   };
 }
 
@@ -88,7 +90,7 @@ export type QuestionLocals = {
 };
 
 export interface ErrorObj {
-  code: number;
-  msg: string;
+  code?: number;
+  msg?: string;
   error?: Error;
 }

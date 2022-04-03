@@ -14,10 +14,11 @@ export const authMiddleware: RequestHandler = async (req, res, next) => {
     }
     res.locals.auth = cookie;
   } catch (err) {
-    return errorHandler(
-      { code: 500, msg: 'error authenticating', error: err as Error },
-      res,
-    );
+    return errorHandler(res, {
+      code: 500,
+      msg: 'error authenticating',
+      error: err as Error,
+    });
   }
   return next();
 };

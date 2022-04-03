@@ -21,8 +21,7 @@ const authHook: HasuraAuthHook = async (_, res) => {
     };
     return res.json(result);
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: err });
+    return errorHandler(res, { error: err as Error });
   }
 };
 
@@ -54,12 +53,9 @@ const login: HasuraLoginHandler = async (req, res) => {
       console.log(user.insert_users_one ?? { wallet });
       return res.json(user.insert_users_one ?? { wallet });
     }
-    return errorHandler({ code: 401, msg: 'invalid login' }, res);
+    return errorHandler(res, { code: 401, msg: 'invalid login' });
   } catch (err) {
-    return errorHandler(
-      { code: 500, msg: 'an unexpected error occurred', error: err as Error },
-      res,
-    );
+    return errorHandler(res, { error: err as Error });
   }
 };
 

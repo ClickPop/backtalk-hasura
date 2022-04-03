@@ -5,7 +5,7 @@ import { errorHandler } from 'src/errors/errorHandler';
 export const checkApiKey: RequestHandler = async (req, res, next) => {
   const apiKey = req.headers.authorization;
   if (!apiKey || apiKey !== HASURA_API_KEY) {
-    return errorHandler({ code: 401, msg: 'invalid api key on request' }, res);
+    return errorHandler(res, { code: 401, msg: 'invalid api key on request' });
   }
   return next();
 };

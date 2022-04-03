@@ -32,6 +32,8 @@ services:
     volumes:
       - ../functions/functions:/home/node/app/functions
       - ../functions/src:/home/node/app/src
+    ports:
+    - "5003:5003"
     restart: always
     env_file:
         - .env
