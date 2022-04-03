@@ -49,10 +49,11 @@ const login: HasuraLoginHandler = async (req, res) => {
         httpOnly: true,
         signed: true,
       });
-      return res.send({
-        'x-hasura-user-id': signer,
-        'x-hasura-role': Roles_Enum.User,
-      });
+      const user = await upsertUser({ wallet });
+      if (!user.insert_users_one) {
+        return res.status(401).send({ error: 'Unable to upsert user' });
+      }
+      return res.send(user.insert_users_one);
     }
     return res.status(401).send({ error: 'Invalid login' });
   } catch (err) {

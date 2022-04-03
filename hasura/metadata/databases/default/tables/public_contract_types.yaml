@@ -1,4 +1,0 @@
-table:
-  name: contract_types
-  schema: public
-is_enum: true

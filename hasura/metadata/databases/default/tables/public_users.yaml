@@ -23,14 +23,7 @@ insert_permissions:
         _eq: X-Hasura-User-Id
     columns:
     - email
-    - wallet
-  role: anonymous
-- permission:
-    check:
-      wallet:
-        _eq: X-Hasura-User-Id
-    columns:
-    - email
+    - name
     - wallet
   role: user
 select_permissions:
@@ -38,43 +31,27 @@ select_permissions:
     columns:
     - email
     - wallet
-    filter:
-      wallet:
-        _eq: X-Hasura-User-Id
+    filter: {}
   role: anonymous
 - permission:
     columns:
-    - email
+    - name
     - wallet
-    filter:
-      wallet:
-        _eq: X-Hasura-User-Id
+    filter: {}
   role: user
 update_permissions:
 - permission:
-    check: null
-    columns:
-    - email
-    - wallet
-    filter:
+    check:
       wallet:
         _eq: X-Hasura-User-Id
-  role: anonymous
-- permission:
-    check: null
     columns:
     - email
-    - wallet
+    - name
     filter:
       wallet:
         _eq: X-Hasura-User-Id
   role: user
 delete_permissions:
-- permission:
-    filter:
-      wallet:
-        _eq: X-Hasura-User-Id
-  role: anonymous
 - permission:
     filter:
       wallet:

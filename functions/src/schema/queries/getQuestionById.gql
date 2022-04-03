@@ -1,0 +1,17 @@
+query getQuestionById($question_id: Int!) {
+  questions_by_pk(id: $question_id) {
+    question_type
+    options {
+      id
+      content
+    }
+    survey {
+      is_active
+      contract {
+        address
+        token_type
+        token_ids
+      }
+    }
+  }
+}

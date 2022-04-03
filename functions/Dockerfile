@@ -9,5 +9,3 @@ RUN npm i -g pnpm
 RUN pnpm i
 
 COPY . .
-
-RUN pnpm compile

@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
+import { GetQuestionByIdQuery, UpsertUserMutation } from 'src/schema/schema.g';
 export * from 'src/schema/schema.g';
 export enum Roles_Enum {
   Admin = 'admin',
@@ -25,6 +26,14 @@ export type HasuraActionReqBody = {
   session_variables: HasuraSessionVariables;
   request_query: string;
 };
+
+interface NewResponseBody extends HasuraActionReqBody {
+  input: {
+    question_id: number;
+    response_content: string;
+    response_option_id?: number;
+  };
+}
 
 // These are generic types used for the hasura actions/triggers
 export type HasuraActionHandler<
@@ -54,9 +63,25 @@ export type HasuraAuthHook = RequestHandler<
 
 // Login action handler using the action handler generic
 export type HasuraLoginHandler = HasuraActionHandler<
-  HasuraSessionVariables | { error: unknown },
+  UpsertUserMutation['insert_users_one'] | { error: unknown },
   { action: { name: 'login' }; input: { wallet: string; msg: string } }
 >;
+
+export type GetQuestionMiddleware = HasuraActionHandler<
+  { error: unknown },
+  NewResponseBody
+>;
+
+export type NewResponseHandler = HasuraActionHandler<
+  UpsertUserMutation['insert_users_one'] | { error: unknown },
+  NewResponseBody,
+  qs.ParsedQs,
+  QuestionLocals
+>;
+
+export type QuestionLocals = {
+  question: GetQuestionByIdQuery['questions_by_pk'];
+};
 
 export interface ErrorObj {
   code: number;

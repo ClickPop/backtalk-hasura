@@ -17,7 +17,7 @@ services:
     ports:
     - "8081:8080"
     depends_on:
-    - "postgres"
+    - "backtalk-postgres"
     restart: always
     env_file:
       - .env
@@ -25,7 +25,7 @@ services:
     container_name: backtalk-functions-service
     command: pnpm dev
     depends_on:
-      - "graphql-engine"
+      - "backtalk-graphql-engine"
     build:
       context: ../functions
       dockerfile: Dockerfile

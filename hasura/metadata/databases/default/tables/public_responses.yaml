@@ -15,29 +15,16 @@ insert_permissions:
 - permission:
     backend_only: false
     check:
-      question:
-        survey:
-          _and:
-          - is_active:
-              _eq: true
-          - contract_address:
-              _is_null: true
-    columns:
-    - question_id
-    - response_option_id
-    - response_content
-    - wallet
-  role: anonymous
-- permission:
-    backend_only: false
-    check:
-      question:
-        survey:
-          _and:
-          - is_active:
-              _eq: true
-          - contract_address:
-              _is_null: true
+      _and:
+      - wallet:
+          _eq: X-Hasura-User-Id
+      - question:
+          survey:
+            _and:
+            - is_active:
+                _eq: true
+            - contract_address:
+                _is_null: true
     columns:
     - question_id
     - response_option_id
@@ -52,16 +39,16 @@ select_permissions:
     - response_content
     - wallet
     filter:
-      question:
-        survey:
-          _or:
-          - is_public:
-              _eq: true
-          - user:
-              wallet:
+      _or:
+      - wallet:
+          _eq: X-Hasura-User-Id
+      - question:
+          survey:
+            _or:
+            - is_public:
+                _eq: true
+            - owner:
                 _eq: X-Hasura-User-Id
-          - owner:
-              _eq: X-Hasura-User-Id
   role: anonymous
 - permission:
     columns:
@@ -70,61 +57,56 @@ select_permissions:
     - response_content
     - wallet
     filter:
-      question:
-        survey:
-          _or:
-          - is_public:
-              _eq: true
-          - user:
-              wallet:
+      _or:
+      - wallet:
+          _eq: X-Hasura-User-Id
+      - question:
+          survey:
+            _or:
+            - is_public:
+                _eq: true
+            - owner:
                 _eq: X-Hasura-User-Id
-          - owner:
-              _eq: X-Hasura-User-Id
   role: user
 update_permissions:
 - permission:
-    check: null
-    columns:
-    - response_content
-    - response_option_id
-    filter:
-      question:
-        survey:
-          _and:
-          - is_active:
-              _eq: true
-          - contract_address:
-              _is_null: true
-  role: anonymous
-- permission:
     check:
-      question:
-        survey:
-          _and:
-          - is_active:
-              _eq: true
-          - contract_address:
-              _is_null: true
+      _and:
+      - wallet:
+          _eq: X-Hasura-User-Id
+      - question:
+          survey:
+            _and:
+            - is_active:
+                _eq: true
+            - contract_address:
+                _is_null: true
     columns:
     - response_content
     - response_option_id
     filter:
-      question:
-        survey:
-          _and:
-          - is_active:
-              _eq: true
-          - contract_address:
-              _is_null: true
+      _and:
+      - wallet:
+          _eq: X-Hasura-User-Id
+      - question:
+          survey:
+            _and:
+            - is_active:
+                _eq: true
+            - contract_address:
+                _is_null: true
   role: user
 delete_permissions:
 - permission:
     filter:
-      wallet:
-        _eq: X-Hasura-User-Id
-  role: anonymous
-- permission:
-    filter:
-      wallet:
-        _eq: X-Hasura-User-Id
+      _and:
+      - wallet:
+          _eq: X-Hasura-User-Id
+      - question:
+          survey:
+            _and:
+            - is_active:
+                _eq: true
+            - contract_address:
+                _is_null: true
   role: user

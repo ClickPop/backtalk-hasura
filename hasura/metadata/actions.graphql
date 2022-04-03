@@ -1,0 +1,17 @@
+type Mutation {
+  create_new_response(
+    input: ResponseInput!
+  ): ResponseOutput
+}
+
+input ResponseInput {
+  question_id: Int!
+  response_content: String!
+  response_option_id: Int
+}
+
+type ResponseOutput {
+  wallet: String!
+  question_id: Int!
+}
+

@@ -1,6 +1,27 @@
-actions: []
+actions:
+- name: create_new_response
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/new-response'
+    headers:
+    - name: authorization
+      value_from_env: WEBHOOK_API_KEY
+  permissions:
+  - role: user
 custom_types:
   enums: []
-  input_objects: []
-  objects: []
+  input_objects:
+  - name: ResponseInput
+  objects:
+  - name: ResponseOutput
+    relationships:
+    - remote_table:
+        schema: public
+        name: responses
+      name: response_from_action
+      source: default
+      type: object
+      field_mapping:
+        question_id: question_id
+        wallet: wallet
   scalars: []
