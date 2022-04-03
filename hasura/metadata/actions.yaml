@@ -1,4 +1,12 @@
 actions:
+- name: checkAuth
+  definition:
+    kind: ""
+    handler: '{{ACTION_BASE_URL}}/auth-check'
+  permissions:
+  - role: anonymous
+  - role: user
+  comment: auth_check
 - name: create_new_response
   definition:
     kind: synchronous
@@ -7,6 +15,16 @@ actions:
     - name: authorization
       value_from_env: WEBHOOK_API_KEY
   permissions:
+  - role: user
+- name: login
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/auth/login'
+    headers:
+    - name: authorization
+      value_from_env: WEBHOOK_API_KEY
+  permissions:
+  - role: anonymous
   - role: user
 custom_types:
   enums: []
@@ -24,4 +42,6 @@ custom_types:
       field_mapping:
         question_id: question_id
         wallet: wallet
+  - name: LoginOutput
+  - name: AuthOutput
   scalars: []

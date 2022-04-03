@@ -9,6 +9,7 @@ import {
   Roles_Enum,
 } from 'src/types';
 import { sdk } from 'src/lib/graphql';
+import { errorHandler } from 'src/errors/errorHandler';
 const { upsertUser } = sdk;
 const authHook: HasuraAuthHook = async (_, res) => {
   try {
@@ -50,14 +51,15 @@ const login: HasuraLoginHandler = async (req, res) => {
         signed: true,
       });
       const user = await upsertUser({ wallet });
-      if (!user.insert_users_one) {
-        return res.status(401).send({ error: 'Unable to upsert user' });
-      }
-      return res.send(user.insert_users_one);
+      console.log(user.insert_users_one ?? { wallet });
+      return res.json(user.insert_users_one ?? { wallet });
     }
-    return res.status(401).send({ error: 'Invalid login' });
+    return errorHandler({ code: 401, msg: 'invalid login' }, res);
   } catch (err) {
-    return res.status(500).json({ error: err });
+    return errorHandler(
+      { code: 500, msg: 'an unexpected error occurred', error: err as Error },
+      res,
+    );
   }
 };
 
