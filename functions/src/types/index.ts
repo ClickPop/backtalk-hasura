@@ -1,6 +1,10 @@
 import { RequestHandler } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
-import { GetQuestionByIdQuery, UpsertUserMutation } from 'src/schema/schema.g';
+import {
+  GetQuestionByIdQuery,
+  UpsertResponseMutation,
+  UpsertUserMutation,
+} from 'src/schema/schema.g';
 export * from 'src/schema/schema.g';
 export enum Roles_Enum {
   Admin = 'admin',
@@ -73,14 +77,14 @@ export type GetQuestionMiddleware = HasuraActionHandler<
 >;
 
 export type NewResponseHandler = HasuraActionHandler<
-  UpsertUserMutation['insert_users_one'] | { error: unknown },
+  UpsertResponseMutation['insert_responses_one'] | { error: unknown },
   NewResponseBody,
   qs.ParsedQs,
   QuestionLocals
 >;
 
 export type QuestionLocals = {
-  question: GetQuestionByIdQuery['questions_by_pk'];
+  question: Exclude<GetQuestionByIdQuery['questions_by_pk'], null | undefined>;
 };
 
 export interface ErrorObj {

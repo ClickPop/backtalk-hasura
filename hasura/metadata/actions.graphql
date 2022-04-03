@@ -1,7 +1,18 @@
+type Query {
+  checkAuth: AuthOutput!
+}
+
 type Mutation {
   create_new_response(
     input: ResponseInput!
   ): ResponseOutput
+}
+
+type Mutation {
+  login(
+    wallet: String!
+    msg: String!
+  ): LoginOutput
 }
 
 input ResponseInput {
@@ -12,6 +23,17 @@ input ResponseInput {
 
 type ResponseOutput {
   wallet: String!
+  response_content: String!
   question_id: Int!
+}
+
+type LoginOutput {
+  wallet: String!
+  email: String
+}
+
+type AuthOutput {
+  id: String
+  role: String!
 }
 
