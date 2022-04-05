@@ -11,28 +11,9 @@ object_relationships:
 - name: user
   using:
     foreign_key_constraint_on: wallet
-insert_permissions:
-- permission:
-    backend_only: false
-    check:
-      _and:
-      - wallet:
-          _eq: X-Hasura-User-Id
-      - question:
-          survey:
-            _and:
-            - is_active:
-                _eq: true
-            - contract_address:
-                _is_null: true
-    columns:
-    - question_id
-    - response_option_id
-    - response_content
-    - wallet
-  role: user
 select_permissions:
 - permission:
+    allow_aggregations: true
     columns:
     - question_id
     - response_option_id
@@ -51,10 +32,13 @@ select_permissions:
                 _eq: X-Hasura-User-Id
   role: anonymous
 - permission:
+    allow_aggregations: true
     columns:
+    - created_at
     - question_id
-    - response_option_id
     - response_content
+    - response_option_id
+    - updated_at
     - wallet
     filter:
       _or:
@@ -67,46 +51,4 @@ select_permissions:
                 _eq: true
             - owner:
                 _eq: X-Hasura-User-Id
-  role: user
-update_permissions:
-- permission:
-    check:
-      _and:
-      - wallet:
-          _eq: X-Hasura-User-Id
-      - question:
-          survey:
-            _and:
-            - is_active:
-                _eq: true
-            - contract_address:
-                _is_null: true
-    columns:
-    - response_content
-    - response_option_id
-    filter:
-      _and:
-      - wallet:
-          _eq: X-Hasura-User-Id
-      - question:
-          survey:
-            _and:
-            - is_active:
-                _eq: true
-            - contract_address:
-                _is_null: true
-  role: user
-delete_permissions:
-- permission:
-    filter:
-      _and:
-      - wallet:
-          _eq: X-Hasura-User-Id
-      - question:
-          survey:
-            _and:
-            - is_active:
-                _eq: true
-            - contract_address:
-                _is_null: true
   role: user

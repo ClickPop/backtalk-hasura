@@ -1,5 +1,5 @@
-query getQuestionById($question_id: Int!) {
-  questions_by_pk(id: $question_id) {
+query getQuestionsById($question_ids: [Int!]!) {
+  questions(where: { id: { _in: $question_ids } }) {
     question_type
     options {
       id

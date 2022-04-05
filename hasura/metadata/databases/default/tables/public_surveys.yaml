@@ -33,13 +33,15 @@ insert_permissions:
 select_permissions:
 - permission:
     columns:
+    - contract_address
+    - created_at
+    - description
+    - id
     - is_active
     - is_public
-    - id
-    - contract_address
-    - description
     - owner
     - title
+    - updated_at
     filter:
       _or:
       - is_active:
@@ -49,13 +51,15 @@ select_permissions:
   role: anonymous
 - permission:
     columns:
+    - contract_address
+    - created_at
+    - description
+    - id
     - is_active
     - is_public
-    - id
-    - contract_address
-    - description
     - owner
     - title
+    - updated_at
     filter:
       _or:
       - is_active:

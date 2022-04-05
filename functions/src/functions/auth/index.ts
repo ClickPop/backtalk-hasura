@@ -16,7 +16,7 @@ const authHook: HasuraAuthHook = async (_, res) => {
     const wallet = res.locals.auth;
     const role: Roles_Enum = wallet ? Roles_Enum.User : Roles_Enum.Anonymous;
     const result: HasuraAuthHookReponseBody = {
-      'x-hasura-user-id': wallet,
+      'x-hasura-user-id': wallet ?? '',
       'x-hasura-role': role,
     };
     return res.json(result);
@@ -32,7 +32,7 @@ const authCheck: HasuraActionHandler<{
   const wallet = req.body.session_variables['x-hasura-user-id'];
   const role = req.body.session_variables['x-hasura-role'];
   const result = {
-    id: wallet ?? null,
+    id: wallet || null,
     role: role,
   };
   return res.json(result);
@@ -50,7 +50,6 @@ const login: HasuraLoginHandler = async (req, res) => {
         signed: true,
       });
       const user = await upsertUser({ wallet });
-      console.log(user.insert_users_one ?? { wallet });
       return res.json(user.insert_users_one ?? { wallet });
     }
     return errorHandler(res, { code: 401, msg: 'invalid login' });

@@ -1,13 +1,15 @@
-mutation upsertResponse($input: responses_insert_input!) {
-  insert_responses_one(
-    object: $input
+mutation upsertResponses($input: [responses_insert_input!]!) {
+  insert_responses(
+    objects: $input
     on_conflict: {
       constraint: responses_pkey
       update_columns: [response_content, response_option_id]
     }
   ) {
-    wallet
-    question_id
-    response_content
+    returning {
+      wallet
+      question_id
+      response_content
+    }
   }
 }

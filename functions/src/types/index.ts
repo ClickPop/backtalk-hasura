@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import {
-  GetQuestionByIdQuery,
-  UpsertResponseMutation,
+  GetQuestionsByIdQuery,
+  UpsertResponsesMutation,
   UpsertUserMutation,
 } from 'src/schema/schema.g';
 export * from 'src/schema/schema.g';
@@ -37,7 +37,7 @@ interface NewResponseBody extends HasuraActionReqBody {
       question_id: number;
       response_content: string;
       response_option_id?: number;
-    };
+    }[];
   };
 }
 
@@ -73,20 +73,24 @@ export type HasuraLoginHandler = HasuraActionHandler<
   { action: { name: 'login' }; input: { wallet: string; msg: string } }
 >;
 
-export type GetQuestionMiddleware = HasuraActionHandler<
+export type GetQuestionsMiddleware = HasuraActionHandler<
   { error: unknown },
   NewResponseBody
 >;
 
 export type NewResponseHandler = HasuraActionHandler<
-  UpsertResponseMutation['insert_responses_one'] | { error: unknown },
+  | Exclude<
+      UpsertResponsesMutation['insert_responses'],
+      null | undefined
+    >['returning']
+  | { error: unknown },
   NewResponseBody,
   qs.ParsedQs,
   QuestionLocals
 >;
 
 export type QuestionLocals = {
-  question: Exclude<GetQuestionByIdQuery['questions_by_pk'], null | undefined>;
+  questions: GetQuestionsByIdQuery['questions'];
 };
 
 export interface ErrorObj {
