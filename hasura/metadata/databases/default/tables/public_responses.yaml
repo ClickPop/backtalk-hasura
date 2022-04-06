@@ -15,9 +15,11 @@ select_permissions:
 - permission:
     allow_aggregations: true
     columns:
+    - created_at
     - question_id
-    - response_option_id
     - response_content
+    - response_option_id
+    - updated_at
     - wallet
     filter:
       _or:

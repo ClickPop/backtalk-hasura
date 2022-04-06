@@ -1,0 +1,7 @@
+table:
+  name: survey_responses
+  schema: public
+object_relationships:
+- name: survey
+  using:
+    foreign_key_constraint_on: survey_id
