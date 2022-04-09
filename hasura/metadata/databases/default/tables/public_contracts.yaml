@@ -16,10 +16,7 @@ array_relationships:
 insert_permissions:
 - permission:
     backend_only: false
-    check:
-      surveys:
-        owner:
-          _eq: X-Hasura-User-Id
+    check: {}
     columns:
     - token_ids
     - address
@@ -42,23 +39,14 @@ select_permissions:
   role: user
 update_permissions:
 - permission:
-    check:
-      surveys:
-        owner:
-          _eq: X-Hasura-User-Id
+    check: {}
     columns:
     - token_ids
     - address
     - token_type
-    filter:
-      surveys:
-        owner:
-          _eq: X-Hasura-User-Id
+    filter: {}
   role: user
 delete_permissions:
 - permission:
-    filter:
-      surveys:
-        owner:
-          _eq: X-Hasura-User-Id
+    filter: {}
   role: user
