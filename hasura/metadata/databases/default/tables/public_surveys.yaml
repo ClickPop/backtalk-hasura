@@ -16,6 +16,28 @@ array_relationships:
       table:
         name: questions
         schema: public
+- name: survey_responses
+  using:
+    manual_configuration:
+      column_mapping:
+        id: id
+      insertion_order: null
+      remote_table:
+        name: survey_responses
+        schema: public
+computed_fields:
+- comment: Gets the latest response timestamp for a given survey
+  definition:
+    function:
+      name: latest_response
+      schema: public
+  name: latest_response
+- comment: Will give the response count without having to do annoying processing on the front-end.
+  definition:
+    function:
+      name: response_count
+      schema: public
+  name: response_count
 insert_permissions:
 - permission:
     backend_only: false
@@ -44,6 +66,9 @@ select_permissions:
     - owner
     - title
     - updated_at
+    computed_fields:
+    - latest_response
+    - response_count
     filter:
       _or:
       - is_active:
@@ -63,6 +88,9 @@ select_permissions:
     - owner
     - title
     - updated_at
+    computed_fields:
+    - latest_response
+    - response_count
     filter:
       _or:
       - is_active:
