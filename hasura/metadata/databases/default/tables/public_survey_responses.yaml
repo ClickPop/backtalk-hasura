@@ -4,4 +4,29 @@ table:
 object_relationships:
 - name: survey
   using:
-    foreign_key_constraint_on: survey_id
+    manual_configuration:
+      column_mapping:
+        id: id
+      insertion_order: null
+      remote_table:
+        name: surveys
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - created_at
+    - id
+    - question_ids
+    - response_values
+    - wallet
+    filter: {}
+  role: anonymous
+- permission:
+    columns:
+    - created_at
+    - id
+    - question_ids
+    - response_values
+    - wallet
+    filter: {}
+  role: user

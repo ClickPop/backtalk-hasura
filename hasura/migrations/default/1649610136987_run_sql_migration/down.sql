@@ -1,0 +1,13 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- CREATE OR REPLACE VIEW "public"."survey_responses" AS
+--  SELECT responses.wallet,
+--     array_agg(responses.question_id) AS question_ids,
+--     array_agg(responses.response_content) AS response_values,
+--     surveys.id,
+--     max(responses.created_at) as created_at
+--    FROM ((surveys
+--      LEFT JOIN questions ON ((surveys.id = questions.survey_id)))
+--      LEFT JOIN responses ON ((questions.id = responses.question_id)))
+--   GROUP BY responses.wallet, surveys.id
+--   ORDER BY created_at;

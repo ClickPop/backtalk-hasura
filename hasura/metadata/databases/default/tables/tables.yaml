@@ -3,6 +3,7 @@
 - "!include public_question_type.yaml"
 - "!include public_questions.yaml"
 - "!include public_responses.yaml"
+- "!include public_survey_responses.yaml"
 - "!include public_surveys.yaml"
 - "!include public_token_types.yaml"
 - "!include public_users.yaml"
