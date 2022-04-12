@@ -11,13 +11,15 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
   const responseData = req.body.input.input;
   const wallet = req.body.session_variables['x-hasura-user-id'];
   const questions = res.locals.questions;
-  const responsesCount = Math.max(...(questions.map((q)=>q.responses_aggregate?.aggregate?.count ?? 0)))
+  const responsesCount = Math.max(
+    ...questions.map((q) => q.responses_aggregate?.aggregate?.count ?? 0),
+  );
   for (const question of questions) {
-    if(responsesCount >= (question?.survey?.max_responses ?? 0)){
-      return errorHandler(res,{
+    if (responsesCount >= (question?.survey?.max_responses ?? -1)) {
+      return errorHandler(res, {
         msg: 'max amount of responses reached',
         code: 500,
-      })
+      });
     }
     const contractInfo = question.survey.contract;
     if (contractInfo) {
@@ -27,7 +29,7 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
           code: 400,
         });
       }
-    
+
       const contract = getContractByAddressAndTokenType(
         contractInfo.address,
         contractInfo.token_type,
@@ -38,7 +40,7 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
       if (balance < 1) {
         return errorHandler(res, { msg: 'not enough tokens owned', code: 400 });
       }
-    } 
+    }
   }
 
   const responses = await upsertResponses({
