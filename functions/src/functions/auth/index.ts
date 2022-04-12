@@ -43,7 +43,7 @@ const login: HasuraLoginHandler = async (req, res) => {
     const { wallet, msg } = req.body.input;
     const signer = decodeSignedMessage(msg);
     if (signer && signer === wallet.toLowerCase()) {
-      res.cookie('wallet', wallet, {
+      res.cookie('backtalk-wallet', wallet, {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         secure: process.env.NODE_ENV === 'prod',
         httpOnly: true,

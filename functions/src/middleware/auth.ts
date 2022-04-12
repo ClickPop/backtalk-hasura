@@ -3,9 +3,9 @@ import { errorHandler } from 'src/errors/errorHandler';
 
 export const authMiddleware: RequestHandler = async (req, res, next) => {
   try {
-    const cookie = req.signedCookies.wallet;
+    const cookie = req.signedCookies['backtalk-wallet'];
     if (cookie) {
-      res.cookie('wallet', cookie, {
+      res.cookie('backtalk-wallet', cookie, {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         secure: process.env.NODE_ENV === 'prod',
         httpOnly: true,
