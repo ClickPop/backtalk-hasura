@@ -15,7 +15,10 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
     ...questions.map((q) => q.responses_aggregate?.aggregate?.count ?? 0),
   );
   for (const question of questions) {
-    if (responsesCount >= (question?.survey?.max_responses ?? -1)) {
+    if (
+      question?.survey?.max_responses &&
+      responsesCount >= question.survey.max_responses
+    ) {
       return errorHandler(res, {
         msg: 'max amount of responses reached',
         code: 500,
