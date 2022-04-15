@@ -14,6 +14,15 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
   const responsesCount = Math.max(
     ...questions.map((q) => q.responses_aggregate?.aggregate?.count ?? 0),
   );
+  const isActive = questions.reduce<boolean>(
+    (acc, curr) => (acc || curr.survey.is_active) ?? false,
+    false,
+  );
+
+  if (!isActive) {
+    return errorHandler(res, { msg: 'survey is not active', code: 400 });
+  }
+
   for (const question of questions) {
     if (
       question?.survey?.max_responses &&
