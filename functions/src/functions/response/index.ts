@@ -36,6 +36,7 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
       const contract = getContractByAddressAndTokenType(
         contractInfo.address,
         contractInfo.token_type,
+        contractInfo.chain,
       );
 
       const balance = await contract.balanceOf(wallet);

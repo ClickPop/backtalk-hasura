@@ -1,5 +1,5 @@
 query getQuestionsById($question_ids: [Int!]!) {
-  questions(where: {id: {_in: $question_ids}}) {
+  questions(where: { id: { _in: $question_ids } }) {
     question_type
     options {
       id
@@ -11,6 +11,7 @@ query getQuestionsById($question_ids: [Int!]!) {
         address
         token_type
         token_ids
+        chain
       }
       max_responses
     }
