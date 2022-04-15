@@ -2,6 +2,9 @@ table:
   name: contracts
   schema: public
 object_relationships:
+- name: supported_chain
+  using:
+    foreign_key_constraint_on: chain
 - name: tokenTypeByTokenType
   using:
     foreign_key_constraint_on: token_type
@@ -18,31 +21,39 @@ insert_permissions:
     backend_only: false
     check: {}
     columns:
-    - token_ids
     - address
+    - chain
+    - token_ids
     - token_type
   role: user
 select_permissions:
 - permission:
     columns:
     - address
+    - chain
+    - created_at
     - token_ids
     - token_type
+    - updated_at
     filter: {}
   role: anonymous
 - permission:
     columns:
     - address
+    - chain
+    - created_at
     - token_ids
     - token_type
+    - updated_at
     filter: {}
   role: user
 update_permissions:
 - permission:
     check: {}
     columns:
-    - token_ids
     - address
+    - chain
+    - token_ids
     - token_type
     filter: {}
   role: user
