@@ -11,3 +11,4 @@ export const HASURA_ACTION_URL =
   process.env.HASURA_ACTION_URL ?? 'http://host.docker.internal:5003';
 export const HASURA_ADMIN_SECRET = process.env.HASURA_ADMIN_SECRET ?? '';
 export const HASURA_API_KEY = process.env.HASURA_API_KEY ?? '';
+export const SIGNER_MESSAGE = process.env.SIGNER_MESSAGE ?? '';

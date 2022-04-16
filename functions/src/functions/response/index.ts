@@ -22,7 +22,7 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
   if (!isActive) {
     return errorHandler(res, { msg: 'survey is not active', code: 400 });
   }
-
+  let tokenCount = 0;
   for (const question of questions) {
     if (
       question?.survey?.max_responses &&
@@ -53,11 +53,17 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
       if (balance < 1) {
         return errorHandler(res, { msg: 'not enough tokens owned', code: 400 });
       }
+
+      tokenCount = balance.toString();
     }
   }
 
   const responses = await upsertResponses({
-    input: responseData.map((r) => ({ ...r, wallet })),
+    input: responseData.map((r) => ({
+      ...r,
+      wallet,
+      token_count: tokenCount > 0 ? tokenCount : undefined,
+    })),
   });
 
   if (!responses.insert_responses) {
