@@ -18,6 +18,7 @@ select_permissions:
     - id
     - question_ids
     - response_values
+    - token_count
     - wallet
     filter: {}
   role: anonymous
@@ -27,6 +28,7 @@ select_permissions:
     - id
     - question_ids
     - response_values
+    - token_count
     - wallet
     filter: {}
   role: user
