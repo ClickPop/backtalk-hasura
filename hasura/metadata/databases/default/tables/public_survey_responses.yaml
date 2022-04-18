@@ -20,7 +20,16 @@ select_permissions:
     - response_values
     - token_count
     - wallet
-    filter: {}
+    filter:
+      _or:
+      - wallet:
+          _eq: X-Hasura-User-Id
+      - survey:
+          _or:
+          - owner:
+              _eq: X-Hasura-User-Id
+          - is_public:
+              _eq: true
   role: anonymous
 - permission:
     columns:
@@ -30,5 +39,14 @@ select_permissions:
     - response_values
     - token_count
     - wallet
-    filter: {}
+    filter:
+      _or:
+      - wallet:
+          _eq: X-Hasura-User-Id
+      - survey:
+          _or:
+          - owner:
+              _eq: X-Hasura-User-Id
+          - is_public:
+              _eq: true
   role: user
