@@ -1,6 +1,8 @@
-query getQuestionsById($question_ids: [Int!]!) {
-  questions(where: { id: { _in: $question_ids } }) {
+query getQuestionsBySurveyId($survey_id: Int!) {
+  questions(where: { survey_id: { _eq: $survey_id } }) {
+    id
     question_type
+    is_required
     options {
       id
       content

@@ -4,7 +4,7 @@ type Query {
 
 type Mutation {
   create_new_response(
-    input: [ResponseInput!]!
+    input: ResponseInput!
   ): [ResponseOutput!]!
 }
 
@@ -16,6 +16,11 @@ type Mutation {
 }
 
 input ResponseInput {
+  survey_id: Int!
+  responses: [QuestionInput!]!
+}
+
+input QuestionInput {
   question_id: Int!
   response_content: String!
   response_option_id: Int
