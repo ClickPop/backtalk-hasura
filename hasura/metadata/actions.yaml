@@ -30,6 +30,7 @@ custom_types:
   enums: []
   input_objects:
   - name: ResponseInput
+  - name: QuestionInput
   objects:
   - name: ResponseOutput
     relationships:

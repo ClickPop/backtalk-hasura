@@ -2,15 +2,16 @@ import { errorHandler } from 'src/errors/errorHandler';
 import { sdk } from 'src/lib/graphql';
 import { GetQuestionsMiddleware } from 'src/types';
 
-const { getQuestionsById } = sdk;
+const { getQuestionsBySurveyId } = sdk;
 
 export const getQuestionsMiddleware: GetQuestionsMiddleware = async (
   req,
   res,
   next,
 ) => {
-  const question_ids = req.body.input.input.map((r) => r.question_id);
-  const { questions } = await getQuestionsById({ question_ids });
+  const { questions } = await getQuestionsBySurveyId({
+    survey_id: req.body.input.input.survey_id,
+  });
   if (questions.length > 0) {
     res.locals.questions = questions;
     return next();
@@ -18,6 +19,6 @@ export const getQuestionsMiddleware: GetQuestionsMiddleware = async (
 
   return errorHandler(res, {
     code: 404,
-    msg: `no questions found with ids ${question_ids}`,
+    msg: 'no questions found',
   });
 };

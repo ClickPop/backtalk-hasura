@@ -8,7 +8,7 @@ import { NewResponseHandler, Token_Types_Enum } from 'src/types';
 const { upsertResponses } = sdk;
 
 const createNewResponse: NewResponseHandler = async (req, res) => {
-  const responseData = req.body.input.input;
+  const responseData = req.body.input.input.responses;
   const wallet = req.body.session_variables['x-hasura-user-id'];
   const questions = res.locals.questions;
   const responsesCount = Math.max(
@@ -24,6 +24,20 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
   }
   let tokenCount = 0;
   for (const question of questions) {
+    console.log(
+      question.is_required,
+      responseData.find((r) => r.question_id === question.id),
+    );
+    if (
+      question.is_required &&
+      !responseData.find((r) => r.question_id === question.id)
+    ) {
+      return errorHandler(res, {
+        msg: `Missing required response for question id ${question.id}`,
+        code: 400,
+      });
+    }
+
     if (
       question?.survey?.max_responses &&
       responsesCount >= question.survey.max_responses
@@ -33,6 +47,7 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
         code: 500,
       });
     }
+
     const contractInfo = question.survey.contract;
     if (contractInfo) {
       if (contractInfo.token_type !== Token_Types_Enum.Erc721) {

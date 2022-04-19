@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import {
-  GetQuestionsByIdQuery,
+  GetQuestionsBySurveyIdQuery,
   UpsertResponsesMutation,
   UpsertUserMutation,
 } from 'src/schema/schema.g';
@@ -34,10 +34,13 @@ export type HasuraActionReqBody = {
 interface NewResponseBody extends HasuraActionReqBody {
   input: {
     input: {
-      question_id: number;
-      response_content: string;
-      response_option_id?: number;
-    }[];
+      survey_id: number;
+      responses: {
+        question_id: number;
+        response_content: string;
+        response_option_id?: number;
+      }[];
+    };
   };
 }
 
@@ -90,7 +93,7 @@ export type NewResponseHandler = HasuraActionHandler<
 >;
 
 export type QuestionLocals = {
-  questions: GetQuestionsByIdQuery['questions'];
+  questions: GetQuestionsBySurveyIdQuery['questions'];
 };
 
 export interface ErrorObj {
