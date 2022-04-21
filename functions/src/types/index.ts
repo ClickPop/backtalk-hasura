@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import {
-  GetQuestionsBySurveyIdQuery,
+  GetSurveyByIdQuery,
   UpsertResponsesMutation,
   UpsertUserMutation,
 } from 'src/schema/schema.g';
@@ -93,7 +93,7 @@ export type NewResponseHandler = HasuraActionHandler<
 >;
 
 export type QuestionLocals = {
-  questions: GetQuestionsBySurveyIdQuery['questions'];
+  survey: Exclude<GetSurveyByIdQuery['surveys_by_pk'], null | undefined>;
 };
 
 export interface ErrorObj {
