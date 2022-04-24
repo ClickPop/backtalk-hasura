@@ -13,32 +13,13 @@ object_relationships:
         schema: public
 select_permissions:
 - permission:
+    allow_aggregations: true
     columns:
-    - created_at
-    - id
-    - question_ids
-    - response_values
     - token_count
-    - wallet
-    filter:
-      _or:
-      - wallet:
-          _eq: X-Hasura-User-Id
-      - survey:
-          _or:
-          - owner:
-              _eq: X-Hasura-User-Id
-          - is_public:
-              _eq: true
-  role: anonymous
-- permission:
-    columns:
-    - created_at
     - id
-    - question_ids
-    - response_values
-    - token_count
+    - question_responses
     - wallet
+    - created_at
     filter:
       _or:
       - wallet:
