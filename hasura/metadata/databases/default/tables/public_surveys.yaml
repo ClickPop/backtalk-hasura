@@ -2,19 +2,30 @@ table:
   name: surveys
   schema: public
 object_relationships:
-- name: contract
-  using:
-    foreign_key_constraint_on: contract_address
 - name: user
   using:
     foreign_key_constraint_on: owner
 array_relationships:
+- name: contracts
+  using:
+    foreign_key_constraint_on:
+      column: survey_id
+      table:
+        name: contracts
+        schema: public
 - name: questions
   using:
     foreign_key_constraint_on:
       column: survey_id
       table:
         name: questions
+        schema: public
+- name: response_tokens
+  using:
+    foreign_key_constraint_on:
+      column: survey_id
+      table:
+        name: response_tokens
         schema: public
 - name: survey_responses
   using:
@@ -45,7 +56,6 @@ insert_permissions:
       owner:
         _eq: X-Hasura-User-Id
     columns:
-    - contract_address
     - description
     - is_active
     - is_public
@@ -56,7 +66,6 @@ insert_permissions:
 select_permissions:
 - permission:
     columns:
-    - contract_address
     - created_at
     - description
     - id
@@ -78,7 +87,6 @@ select_permissions:
   role: anonymous
 - permission:
     columns:
-    - contract_address
     - created_at
     - description
     - id
@@ -104,7 +112,6 @@ update_permissions:
       owner:
         _eq: X-Hasura-User-Id
     columns:
-    - contract_address
     - description
     - is_active
     - is_public

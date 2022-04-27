@@ -5,17 +5,12 @@ object_relationships:
 - name: supported_chain
   using:
     foreign_key_constraint_on: chain
+- name: survey
+  using:
+    foreign_key_constraint_on: survey_id
 - name: tokenTypeByTokenType
   using:
     foreign_key_constraint_on: token_type
-array_relationships:
-- name: surveys
-  using:
-    foreign_key_constraint_on:
-      column: contract_address
-      table:
-        name: surveys
-        schema: public
 insert_permissions:
 - permission:
     backend_only: false

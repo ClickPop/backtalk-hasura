@@ -2,7 +2,7 @@ query getSurveyById($survey_id: Int!) {
   surveys_by_pk(id: $survey_id) {
     id
     is_active
-    contract {
+    contracts {
       address
       token_type
       token_ids

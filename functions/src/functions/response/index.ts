@@ -6,6 +6,7 @@ import { getQuestionsMiddleware } from 'src/middleware/getQuestions';
 import {
   NewResponseHandler,
   Question_Type_Enum,
+  Response_Tokens_Insert_Input,
   Token_Types_Enum,
 } from 'src/types';
 
@@ -30,9 +31,8 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
       code: 500,
     });
   }
-  let tokenCount = 0;
-  const contractInfo = survey.contract;
-  if (contractInfo) {
+  const tokenCounts: Array<Response_Tokens_Insert_Input> = [];
+  for (const contractInfo of survey.contracts) {
     if (contractInfo.token_type !== Token_Types_Enum.Erc721) {
       return errorHandler(res, {
         msg: 'token type on contract not supported',
@@ -51,7 +51,13 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
       return errorHandler(res, { msg: 'not enough tokens owned', code: 400 });
     }
 
-    tokenCount = balance.toString();
+    tokenCounts.push({
+      wallet,
+      contract_address: contractInfo.address,
+      chain: contractInfo.chain,
+      tokens: balance.toString(),
+      survey_id: survey.id,
+    });
   }
   for (const question of questions) {
     if (
@@ -96,8 +102,9 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
     input: responseData.map((r) => ({
       ...r,
       wallet,
-      token_count: tokenCount > 0 ? tokenCount : undefined,
     })),
+    token_counts: tokenCounts,
+    include_tokens: survey.contracts.length > 0,
   });
 
   if (!responses.insert_responses) {

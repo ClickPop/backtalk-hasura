@@ -2,6 +2,7 @@
 - "!include public_options.yaml"
 - "!include public_question_type.yaml"
 - "!include public_questions.yaml"
+- "!include public_response_tokens.yaml"
 - "!include public_responses.yaml"
 - "!include public_supported_chains.yaml"
 - "!include public_survey_responses.yaml"

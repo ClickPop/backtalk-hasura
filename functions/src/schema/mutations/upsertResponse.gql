@@ -1,4 +1,8 @@
-mutation upsertResponses($input: [responses_insert_input!]!) {
+mutation upsertResponses(
+  $input: [responses_insert_input!]!
+  $token_counts: [response_tokens_insert_input!]!
+  $include_tokens: Boolean = false
+) {
   insert_responses(
     objects: $input
     on_conflict: {
@@ -10,6 +14,14 @@ mutation upsertResponses($input: [responses_insert_input!]!) {
       wallet
       question_id
       response_content
+    }
+  }
+  insert_response_tokens(objects: $token_counts) @include(if: $include_tokens) {
+    returning {
+      wallet
+      survey_id
+      contract_address
+      tokens
     }
   }
 }
