@@ -1,0 +1,10 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- UPDATE contracts
+-- SET survey_id = (
+--         SELECT surveys.id
+--         FROM surveys
+--         WHERE surveys.contract_address = contracts.address
+--         LIMIT 1
+--     )
+-- WHERE contracts.address IS NOT NULL;

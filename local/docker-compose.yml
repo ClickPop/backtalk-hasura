@@ -6,6 +6,7 @@ services:
     restart: always
     volumes:
     - ./db_data/:/var/lib/postgresql/data
+    - ./dump/:/app/pg_dump
     environment:
       POSTGRES_PASSWORD: postgrespassword
   backtalk-graphql-engine:

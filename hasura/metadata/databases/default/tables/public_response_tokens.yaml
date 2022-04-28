@@ -1,24 +1,32 @@
 table:
-  name: survey_responses
+  name: response_tokens
   schema: public
 object_relationships:
-- name: survey
+- name: contract
   using:
     manual_configuration:
       column_mapping:
-        id: id
+        chain: chain
+        contract_address: address
+        survey_id: survey_id
       insertion_order: null
       remote_table:
-        name: surveys
+        name: contracts
         schema: public
+- name: survey
+  using:
+    foreign_key_constraint_on: survey_id
+- name: user
+  using:
+    foreign_key_constraint_on: wallet
 select_permissions:
 - permission:
     columns:
+    - survey_id
+    - contract_address
     - wallet
-    - question_responses
-    - id
-    - created_at
-    - token_count
+    - tokens
+    - chain
     filter:
       _or:
       - wallet:
@@ -32,11 +40,11 @@ select_permissions:
   role: anonymous
 - permission:
     columns:
+    - survey_id
+    - contract_address
     - wallet
-    - question_responses
-    - id
-    - created_at
-    - token_count
+    - tokens
+    - chain
     filter:
       _or:
       - wallet:
