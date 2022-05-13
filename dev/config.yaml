@@ -1,0 +1,4 @@
+version: 3
+endpoint: https://backtalk-dev.hasura.app
+metadata_directory: ../hasura/metadata
+migrations_directory: ../hasura/migrations
