@@ -52,7 +52,13 @@ const login: HasuraLoginHandler = async (req, res) => {
       const user = await upsertUser({ wallet });
       return res.json(user.insert_users_one ?? { wallet });
     }
-    return errorHandler(res, { code: 401, msg: 'invalid login' });
+    return errorHandler(res, {
+      code: 401,
+      msg: 'invalid login',
+      error: new Error(
+        `invalid login: ${signer} not equal to ${wallet.toLowerCase()}`,
+      ),
+    });
   } catch (err) {
     return errorHandler(res, { error: err as Error });
   }
