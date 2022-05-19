@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express';
-import { ParamsDictionary } from 'express-serve-static-core';
 import {
   GetSurveyByIdQuery,
   UpsertResponsesMutation,
@@ -11,6 +10,10 @@ export enum Roles_Enum {
   Anonymous = 'anonymous',
   User = 'user',
 }
+
+type ParamsDictionary = {
+  [key: string]: string;
+};
 
 /**
  * Hasura
