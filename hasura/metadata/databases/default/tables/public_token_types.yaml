@@ -1,23 +1,23 @@
 table:
-  name: token_types
   schema: public
+  name: token_types
 is_enum: true
 array_relationships:
-- name: contracts
-  using:
-    foreign_key_constraint_on:
-      column: token_type
-      table:
-        name: contracts
-        schema: public
+  - name: contracts
+    using:
+      foreign_key_constraint_on:
+        column: token_type
+        table:
+          schema: public
+          name: contracts
 select_permissions:
-- permission:
-    columns:
-    - token_type
-    filter: {}
-  role: anonymous
-- permission:
-    columns:
-    - token_type
-    filter: {}
-  role: user
+  - role: anonymous
+    permission:
+      columns:
+        - token_type
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - token_type
+      filter: {}

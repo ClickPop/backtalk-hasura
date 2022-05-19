@@ -1,23 +1,23 @@
 table:
-  name: supported_chains
   schema: public
+  name: supported_chains
 is_enum: true
 array_relationships:
-- name: contracts
-  using:
-    foreign_key_constraint_on:
-      column: chain
-      table:
-        name: contracts
-        schema: public
+  - name: contracts
+    using:
+      foreign_key_constraint_on:
+        column: chain
+        table:
+          schema: public
+          name: contracts
 select_permissions:
-- permission:
-    columns:
-    - chain_name
-    filter: {}
-  role: anonymous
-- permission:
-    columns:
-    - chain_name
-    filter: {}
-  role: user
+  - role: anonymous
+    permission:
+      columns:
+        - chain_name
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - chain_name
+      filter: {}

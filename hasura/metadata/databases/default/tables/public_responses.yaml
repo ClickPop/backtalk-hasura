@@ -1,56 +1,56 @@
 table:
-  name: responses
   schema: public
+  name: responses
 object_relationships:
-- name: option
-  using:
-    foreign_key_constraint_on: response_option_id
-- name: question
-  using:
-    foreign_key_constraint_on: question_id
-- name: user
-  using:
-    foreign_key_constraint_on: wallet
+  - name: option
+    using:
+      foreign_key_constraint_on: response_option_id
+  - name: question
+    using:
+      foreign_key_constraint_on: question_id
+  - name: user
+    using:
+      foreign_key_constraint_on: wallet
 select_permissions:
-- permission:
-    allow_aggregations: true
-    columns:
-    - created_at
-    - question_id
-    - response_content
-    - response_option_id
-    - updated_at
-    - wallet
-    filter:
-      _or:
-      - wallet:
-          _eq: X-Hasura-User-Id
-      - question:
-          survey:
-            _or:
-            - is_public:
-                _eq: true
-            - owner:
-                _eq: X-Hasura-User-Id
-  role: anonymous
-- permission:
-    allow_aggregations: true
-    columns:
-    - created_at
-    - question_id
-    - response_content
-    - response_option_id
-    - updated_at
-    - wallet
-    filter:
-      _or:
-      - wallet:
-          _eq: X-Hasura-User-Id
-      - question:
-          survey:
-            _or:
-            - is_public:
-                _eq: true
-            - owner:
-                _eq: X-Hasura-User-Id
-  role: user
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - question_id
+        - response_content
+        - response_option_id
+        - updated_at
+        - wallet
+      filter:
+        _or:
+          - wallet:
+              _eq: X-Hasura-User-Id
+          - question:
+              survey:
+                _or:
+                  - is_public:
+                      _eq: true
+                  - owner:
+                      _eq: X-Hasura-User-Id
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - question_id
+        - response_content
+        - response_option_id
+        - updated_at
+        - wallet
+      filter:
+        _or:
+          - wallet:
+              _eq: X-Hasura-User-Id
+          - question:
+              survey:
+                _or:
+                  - is_public:
+                      _eq: true
+                  - owner:
+                      _eq: X-Hasura-User-Id
+      allow_aggregations: true

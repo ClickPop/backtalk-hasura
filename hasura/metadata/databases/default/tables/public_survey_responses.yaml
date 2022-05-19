@@ -1,50 +1,50 @@
 table:
-  name: survey_responses
   schema: public
+  name: survey_responses
 object_relationships:
-- name: survey
-  using:
-    manual_configuration:
-      column_mapping:
-        id: id
-      insertion_order: null
-      remote_table:
-        name: surveys
-        schema: public
+  - name: survey
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: surveys
+        insertion_order: null
+        column_mapping:
+          id: id
 select_permissions:
-- permission:
-    columns:
-    - wallet
-    - question_responses
-    - id
-    - created_at
-    - token_count
-    filter:
-      _or:
-      - wallet:
-          _eq: X-Hasura-User-Id
-      - survey:
-          _or:
-          - owner:
+  - role: anonymous
+    permission:
+      columns:
+        - wallet
+        - question_responses
+        - id
+        - created_at
+        - token_count
+      filter:
+        _or:
+          - wallet:
               _eq: X-Hasura-User-Id
-          - is_public:
-              _eq: true
-  role: anonymous
-- permission:
-    columns:
-    - wallet
-    - question_responses
-    - id
-    - created_at
-    - token_count
-    filter:
-      _or:
-      - wallet:
-          _eq: X-Hasura-User-Id
-      - survey:
-          _or:
-          - owner:
+          - survey:
+              _or:
+                - owner:
+                    _eq: X-Hasura-User-Id
+                - is_public:
+                    _eq: true
+  - role: user
+    permission:
+      columns:
+        - wallet
+        - question_responses
+        - id
+        - created_at
+        - token_count
+      filter:
+        _or:
+          - wallet:
               _eq: X-Hasura-User-Id
-          - is_public:
-              _eq: true
-  role: user
+          - survey:
+              _or:
+                - owner:
+                    _eq: X-Hasura-User-Id
+                - is_public:
+                    _eq: true

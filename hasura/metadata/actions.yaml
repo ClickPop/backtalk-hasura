@@ -1,48 +1,48 @@
 actions:
-- name: checkAuth
-  definition:
-    kind: ""
-    handler: '{{ACTION_BASE_URL}}/auth-check'
-  permissions:
-  - role: anonymous
-  - role: user
-  comment: auth_check
-- name: create_new_response
-  definition:
-    kind: synchronous
-    handler: '{{ACTION_BASE_URL}}/new-response'
-    headers:
-    - name: authorization
-      value_from_env: WEBHOOK_API_KEY
-  permissions:
-  - role: user
-- name: login
-  definition:
-    kind: synchronous
-    handler: '{{ACTION_BASE_URL}}/auth/login'
-    headers:
-    - name: authorization
-      value_from_env: WEBHOOK_API_KEY
-  permissions:
-  - role: anonymous
-  - role: user
+  - name: checkAuth
+    definition:
+      kind: ""
+      handler: '{{ACTION_BASE_URL}}/auth-check'
+    permissions:
+      - role: anonymous
+      - role: user
+    comment: auth_check
+  - name: create_new_response
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/new-response'
+      headers:
+        - name: authorization
+          value_from_env: WEBHOOK_API_KEY
+    permissions:
+      - role: user
+  - name: login
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/auth/login'
+      headers:
+        - name: authorization
+          value_from_env: WEBHOOK_API_KEY
+    permissions:
+      - role: anonymous
+      - role: user
 custom_types:
   enums: []
   input_objects:
-  - name: ResponseInput
-  - name: QuestionInput
+    - name: ResponseInput
+    - name: QuestionInput
   objects:
-  - name: ResponseOutput
-    relationships:
-    - remote_table:
-        schema: public
-        name: responses
-      name: response_from_action
-      source: default
-      type: object
-      field_mapping:
-        question_id: question_id
-        wallet: wallet
-  - name: LoginOutput
-  - name: AuthOutput
+    - name: ResponseOutput
+      relationships:
+        - remote_table:
+            schema: public
+            name: responses
+          name: response_from_action
+          source: default
+          type: object
+          field_mapping:
+            question_id: question_id
+            wallet: wallet
+    - name: LoginOutput
+    - name: AuthOutput
   scalars: []

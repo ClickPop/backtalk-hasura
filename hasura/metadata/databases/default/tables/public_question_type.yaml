@@ -1,12 +1,12 @@
 table:
-  name: question_type
   schema: public
+  name: question_type
 is_enum: true
 array_relationships:
-- name: questions
-  using:
-    foreign_key_constraint_on:
-      column: question_type
-      table:
-        name: questions
-        schema: public
+  - name: questions
+    using:
+      foreign_key_constraint_on:
+        column: question_type
+        table:
+          schema: public
+          name: questions
