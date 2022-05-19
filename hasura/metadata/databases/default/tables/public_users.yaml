@@ -1,59 +1,59 @@
 table:
-  name: users
   schema: public
+  name: users
 array_relationships:
-- name: responses
-  using:
-    foreign_key_constraint_on:
-      column: wallet
-      table:
-        name: responses
-        schema: public
-- name: surveys
-  using:
-    foreign_key_constraint_on:
-      column: owner
-      table:
-        name: surveys
-        schema: public
+  - name: responses
+    using:
+      foreign_key_constraint_on:
+        column: wallet
+        table:
+          schema: public
+          name: responses
+  - name: surveys
+    using:
+      foreign_key_constraint_on:
+        column: owner
+        table:
+          schema: public
+          name: surveys
 insert_permissions:
-- permission:
-    check:
-      wallet:
-        _eq: X-Hasura-User-Id
-    columns:
-    - email
-    - name
-    - wallet
-  role: user
+  - role: user
+    permission:
+      check:
+        wallet:
+          _eq: X-Hasura-User-Id
+      columns:
+        - email
+        - name
+        - wallet
 select_permissions:
-- permission:
-    columns:
-    - email
-    - wallet
-    filter: {}
-  role: anonymous
-- permission:
-    columns:
-    - name
-    - wallet
-    filter: {}
-  role: user
+  - role: anonymous
+    permission:
+      columns:
+        - email
+        - wallet
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - name
+        - wallet
+      filter: {}
 update_permissions:
-- permission:
-    check:
-      wallet:
-        _eq: X-Hasura-User-Id
-    columns:
-    - email
-    - name
-    filter:
-      wallet:
-        _eq: X-Hasura-User-Id
-  role: user
+  - role: user
+    permission:
+      columns:
+        - email
+        - name
+      filter:
+        wallet:
+          _eq: X-Hasura-User-Id
+      check:
+        wallet:
+          _eq: X-Hasura-User-Id
 delete_permissions:
-- permission:
-    filter:
-      wallet:
-        _eq: X-Hasura-User-Id
-  role: user
+  - role: user
+    permission:
+      filter:
+        wallet:
+          _eq: X-Hasura-User-Id

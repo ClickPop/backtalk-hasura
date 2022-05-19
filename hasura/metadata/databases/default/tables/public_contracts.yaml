@@ -1,58 +1,58 @@
 table:
-  name: contracts
   schema: public
+  name: contracts
 object_relationships:
-- name: supported_chain
-  using:
-    foreign_key_constraint_on: chain
-- name: survey
-  using:
-    foreign_key_constraint_on: survey_id
-- name: tokenTypeByTokenType
-  using:
-    foreign_key_constraint_on: token_type
+  - name: supported_chain
+    using:
+      foreign_key_constraint_on: chain
+  - name: survey
+    using:
+      foreign_key_constraint_on: survey_id
+  - name: tokenTypeByTokenType
+    using:
+      foreign_key_constraint_on: token_type
 insert_permissions:
-- permission:
-    backend_only: false
-    check: {}
-    columns:
-    - address
-    - chain
-    - token_ids
-    - token_type
-  role: user
+  - role: user
+    permission:
+      check: {}
+      columns:
+        - address
+        - chain
+        - token_ids
+        - token_type
+      backend_only: false
 select_permissions:
-- permission:
-    columns:
-    - address
-    - chain
-    - created_at
-    - token_ids
-    - token_type
-    - updated_at
-    filter: {}
-  role: anonymous
-- permission:
-    columns:
-    - address
-    - chain
-    - created_at
-    - token_ids
-    - token_type
-    - updated_at
-    filter: {}
-  role: user
+  - role: anonymous
+    permission:
+      columns:
+        - address
+        - chain
+        - created_at
+        - token_ids
+        - token_type
+        - updated_at
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - address
+        - chain
+        - created_at
+        - token_ids
+        - token_type
+        - updated_at
+      filter: {}
 update_permissions:
-- permission:
-    check: {}
-    columns:
-    - address
-    - chain
-    - token_ids
-    - token_type
-    filter: {}
-  role: user
+  - role: user
+    permission:
+      columns:
+        - address
+        - chain
+        - token_ids
+        - token_type
+      filter: {}
+      check: {}
 delete_permissions:
-- permission:
-    filter: {}
-  role: user
+  - role: user
+    permission:
+      filter: {}
