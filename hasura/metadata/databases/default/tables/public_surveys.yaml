@@ -2,6 +2,9 @@ table:
   schema: public
   name: surveys
 object_relationships:
+  - name: survey_image
+    using:
+      foreign_key_constraint_on: image_id
   - name: user
     using:
       foreign_key_constraint_on: owner
@@ -70,6 +73,7 @@ select_permissions:
         - created_at
         - description
         - id
+        - image_id
         - is_active
         - is_public
         - max_responses
@@ -91,6 +95,7 @@ select_permissions:
         - created_at
         - description
         - id
+        - image_id
         - is_active
         - is_public
         - max_responses
