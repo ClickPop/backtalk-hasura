@@ -2,6 +2,13 @@ table:
   schema: public
   name: users
 array_relationships:
+  - name: response_tokens
+    using:
+      foreign_key_constraint_on:
+        column: wallet
+        table:
+          schema: public
+          name: response_tokens
   - name: responses
     using:
       foreign_key_constraint_on:
@@ -9,6 +16,13 @@ array_relationships:
         table:
           schema: public
           name: responses
+  - name: survey_images
+    using:
+      foreign_key_constraint_on:
+        column: owner
+        table:
+          schema: public
+          name: survey_images
   - name: surveys
     using:
       foreign_key_constraint_on:
