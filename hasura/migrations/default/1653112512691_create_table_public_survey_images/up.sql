@@ -1,0 +1,1 @@
+CREATE TABLE "public"."survey_images" ("id" bigserial NOT NULL, "url" Text NOT NULL, "owner" text, PRIMARY KEY ("id") , FOREIGN KEY ("owner") REFERENCES "public"."users"("wallet") ON UPDATE cascade ON DELETE cascade, UNIQUE ("url"));COMMENT ON TABLE "public"."survey_images" IS E'Table to track image urls for surveys';
