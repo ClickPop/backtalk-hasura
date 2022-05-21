@@ -73,6 +73,7 @@ select_permissions:
         - created_at
         - description
         - id
+        - image_id
         - is_active
         - is_public
         - max_responses
@@ -94,6 +95,7 @@ select_permissions:
         - created_at
         - description
         - id
+        - image_id
         - is_active
         - is_public
         - max_responses
