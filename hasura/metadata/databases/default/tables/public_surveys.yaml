@@ -60,6 +60,7 @@ insert_permissions:
           _eq: X-Hasura-User-Id
       columns:
         - description
+        - image_id
         - is_active
         - is_public
         - max_responses
@@ -116,6 +117,7 @@ update_permissions:
     permission:
       columns:
         - description
+        - image_id
         - is_active
         - is_public
         - max_responses
