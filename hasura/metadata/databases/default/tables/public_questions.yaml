@@ -52,6 +52,8 @@ select_permissions:
                 _eq: true
             - owner:
                 _eq: X-Hasura-User-Id
+            - is_public:
+                _eq: true
   - role: user
     permission:
       columns:
@@ -67,6 +69,8 @@ select_permissions:
                 _eq: true
             - owner:
                 _eq: X-Hasura-User-Id
+            - is_public:
+                _eq: true
 update_permissions:
   - role: user
     permission:
