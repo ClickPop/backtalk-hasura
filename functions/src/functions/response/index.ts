@@ -60,16 +60,16 @@ const createNewResponse: NewResponseHandler = async (req, res) => {
     });
   }
   for (const question of questions) {
-    if (
-      question.is_required &&
-      !responseData.find((r) => r.question_id === question.id)
-    ) {
-      return errorHandler(res, {
-        msg: `missing required response for question id ${question.id}`,
-        code: 400,
-      });
+    const response = responseData.find((r) => r.question_id === question.id);
+    if (!response) {
+      if (question.is_required) {
+        return errorHandler(res, {
+          msg: `missing required response for question id ${question.id}`,
+          code: 400,
+        });
+      }
+      continue;
     }
-    const response = responseData.find((r) => r.question_id === question.id)!;
 
     if (!response.response_content) {
       return errorHandler(res, {
