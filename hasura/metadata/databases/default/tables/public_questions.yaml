@@ -31,6 +31,7 @@ insert_permissions:
           owner:
             _eq: X-Hasura-User-Id
       columns:
+        - id
         - is_required
         - prompt
         - question_type

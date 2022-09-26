@@ -23,6 +23,7 @@ insert_permissions:
               _eq: X-Hasura-User-Id
       columns:
         - content
+        - id
         - question_id
       backend_only: false
 select_permissions:
