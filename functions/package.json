@@ -53,6 +53,7 @@
     "graphql-tag": "^2.12.6",
     "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
-    "rlp": "^2.2.7"
+    "rlp": "^2.2.7",
+    "smart-contracts": "*"
   }
 }
